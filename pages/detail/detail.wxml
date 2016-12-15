@@ -1,0 +1,43 @@
+<import src="../template/template.wxml" />
+<view wx:if='{{!mounted}}' class='loading'>
+  <view class='loading-image'>
+    <image mode="aspectFit" src="../../src/img/loading-details.gif"></image>
+  </view>
+  <text>正在为你玩儿命地找书</text>
+</view>
+<view wx:if='{{mounted}}' class='container'>
+  <view class='book-intro'>
+    <view class='book-name'>
+      <text>{{book_name}}</text>
+    </view>
+    <view class='book-author'>
+      <text>{{book_author}}</text>
+    </view>
+    <view wx:if='{{is_faved}}'>
+      <image class="fav_image" mode="aspectFill" src="../../src/img/faved.png" bindtap="unfavBook"></image>
+    </view>
+    <view wx:else> <image class="fav_image" mode="aspectFill" src="../../src/img/fav.png" bindtap="favBook"></image> </view>
+  </view>
+  <view class='detail-cells'>
+    <view wx:if="{{!code}}" class='detail-cell detail-hd'>
+      <text class='empty-book'>此书刊可能正在订购中或者处理中</text>
+    </view>
+    <view wx:else>
+      <view class='detail-cell detail-hd'>
+        <text class='book-code'>索书号：{{code}}</text>
+      </view>
+      <block wx:for="{{books}}" wx:key="book.id" wx:for-item="book">
+        <view class='detail-cell detail-bd'>
+          <view class='book-place'>
+            <text>{{book.place}}</text>
+          </view>
+          <view class='book-status'>
+            <text>{{book.status}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <template is="button" data="{{bindtapaction:'returnIndex', loading: false, context:'返回', bcolor:'#04BE02'}}" />
+  <view class='spacing'></view>
+</view>
